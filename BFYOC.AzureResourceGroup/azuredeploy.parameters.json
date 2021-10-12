@@ -1,0 +1,27 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "plan_name": {
+      "value": "EastUSPlan"
+    },
+    "workflow_name": {
+      "value": "BFYOC-Hacker03"
+    },
+    "site_name": {
+      "value": "BFYOCFunction-Hacker03"
+    },
+    "components_name": {
+      "value": "BFYOCFunction-Hacker03"
+    },
+    "storageaccount_name": {
+      "value": "bfyocfunctionhacker03"
+    },
+    "smartdetectoralertrules_failure_anomalies_name": {
+      "value": "failure anomalies - bfyocfunction-hacker03"
+    },
+    "actiongroups_application_insights_smart_detection_externalid": {
+      "value": "/subscriptions/55c323ac-1f38-4b75-9f17-5280c2c906d1/resourceGroups/hacker5-brent-rg/providers/microsoft.insights/actiongroups/application insights smart detection"
+    }
+  }
+}
