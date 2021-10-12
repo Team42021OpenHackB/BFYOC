@@ -1,4 +1,5 @@
-﻿using Microsoft.Azure.Functions.Extensions.DependencyInjection;
+﻿using BFYOC.Function.Extensions;
+using Microsoft.Azure.Functions.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
 
 [assembly: FunctionsStartup(typeof(BFYOC.Function.Startup))]
@@ -11,7 +12,9 @@ namespace BFYOC.Function
         {
             builder.Services.AddHttpClient();
 
-            
+            builder.Services.AddSingleton<CosmosDBRatingStore>();
+
+            builder.Services.AddSingleton<ApiManager>();
         }
     }
 }
