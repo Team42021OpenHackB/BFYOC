@@ -11,11 +11,7 @@ namespace BFYOC.Function
         {
             builder.Services.AddHttpClient();
 
-            builder.Services.AddSingleton<IMyService>((s) => {
-                return new MyService();
-            });
-
-            builder.Services.AddSingleton<ILoggerProvider, MyLoggerProvider>();
+            
         }
     }
 }
