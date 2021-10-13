@@ -48,5 +48,52 @@ namespace BFYOC.Function.Extensions
             }
             
         }
+
+        public async Task<RatingResponseModel> GetRatingAsync(string ratingId)
+		{
+            var sqlQueryText = $"SELECT * FROM {_containerName} WHERE {_containerName}.id = '{ratingId}'";
+            QueryDefinition queryDefinition = new QueryDefinition(sqlQueryText);
+
+            DatabaseResponse database = await _client.CreateDatabaseIfNotExistsAsync(_dbName);
+            Container container = (await database.Database.CreateContainerIfNotExistsAsync(_containerName, "/productId")).Container;
+          
+            FeedIterator<RatingResponseModel> queryResultSetIterator = container.GetItemQueryIterator<RatingResponseModel>(queryDefinition);
+            List<RatingResponseModel> families = new List<RatingResponseModel>();
+
+            RatingResponseModel result = null;
+            while (queryResultSetIterator.HasMoreResults)
+            {
+                FeedResponse<RatingResponseModel> currentResultSet = await queryResultSetIterator.ReadNextAsync();
+                foreach (RatingResponseModel rating in currentResultSet)
+                {
+                    result = rating;
+                }
+            }
+
+            return result;
+		}
+
+        public async Task<RatingResponseModel[]> GetRatingsAsync(string userId)
+		{
+            var sqlQueryText = $"SELECT * FROM {_containerName} WHERE {_containerName}.UserId = '{userId}'";
+            QueryDefinition queryDefinition = new QueryDefinition(sqlQueryText);
+
+            DatabaseResponse database = await _client.CreateDatabaseIfNotExistsAsync(_dbName);
+            Container container = (await database.Database.CreateContainerIfNotExistsAsync(_containerName, "/productId")).Container;
+
+            FeedIterator<RatingResponseModel> queryResultSetIterator = container.GetItemQueryIterator<RatingResponseModel>(queryDefinition);
+            List<RatingResponseModel> ratings = new List<RatingResponseModel>();
+
+            while (queryResultSetIterator.HasMoreResults)
+            {
+                FeedResponse<RatingResponseModel> currentResultSet = await queryResultSetIterator.ReadNextAsync();
+                foreach (RatingResponseModel rating in currentResultSet)
+                {
+                    ratings.Add(rating);
+                }
+            }
+
+            return ratings.ToArray();
+        }
     }
 }
